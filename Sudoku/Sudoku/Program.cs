@@ -73,9 +73,22 @@
         // Main logic for playing Sudoku
         static void PlaySudoku(int[,] board)
         {
-            // Remove some numbers to make it playable
-            RemoveNumbers(board, 40); // Adjust the difficulty level by changing the number of removed numbers
-
+  Console.WriteLine("Wtite a type of dificulty you want(Easy, Meduim or Hard).");
+  String commnad = Console.ReadLine();
+  
+ switch (commnad) {
+     
+      case "Easy":
+          RemoveNumbers(board, 24);
+          break;
+      case "Medium":
+          RemoveNumbers(board, 39);
+          break;
+      case "Hard":
+          RemoveNumbers(board, 61);
+          break;
+  }
+            
             do
             {
                 Console.Clear();
