@@ -16,7 +16,8 @@
         // Sudoku generation with backtracking
         static bool GenerateSudokuHelper(int[,] board)
         {
-            Random random = new Random();
+           //test rep
+            Random random = new Random(); 
 
             for (int row = 0; row < 9; row++)
             {
