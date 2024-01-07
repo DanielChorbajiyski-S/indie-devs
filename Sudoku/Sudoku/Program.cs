@@ -7,7 +7,8 @@
         static void Main()
         {
             int[,] board = GenerateSudoku();
-            PlaySudoku(board);
+            bool[,] userEntered = new bool[9, 9];
+            PlaySudoku(board, userEntered);
 
             // Wait for a key press before closing the console window
             Console.ReadLine();
@@ -72,7 +73,7 @@
         }
 
         // Main logic for playing Sudoku
-        static void PlaySudoku(int[,] board)
+        static void PlaySudoku(int[,] board, bool[,] userEntered)
         {
   Console.WriteLine("Wtite a type of dificulty you want(Easy, Meduim or Hard).");
   String commnad = Console.ReadLine();
@@ -93,7 +94,7 @@
             do
             {
                 Console.Clear();
-                PrintBoard(board);
+                PrintBoard(board, userEntered);
 
                 Console.Write("Enter row (1-9): ");
                 if (!int.TryParse(Console.ReadLine(), out int row) || row < 1 || row > 9)
@@ -122,9 +123,10 @@
                         continue;
                     }
 
-                    if (IsValidMove(board, row - 1, col - 1, num))
+                   if (!userEntered[row - 1, col - 1] && IsValidMove(board, row - 1, col - 1, num))
                     {
                         board[row - 1, col - 1] = num;
+                        userEntered[row - 1, col - 1] = true; // Mark the number as user-entered
                     }
                     else
                     {
@@ -141,7 +143,7 @@
             } while (!IsSudokuSolved(board));
 
             Console.Clear();
-            PrintBoard(board);
+            PrintBoard(board, userEntered);
             Console.WriteLine("Congratulations! Sudoku solved!");
         }
 
@@ -202,23 +204,36 @@
         }
 
         // Display the state of Sudoku
-        static void PrintBoard(int[,] board)
+        static void PrintBoard(int[,] board, bool[,] userEntered)
+{
+    Console.Clear();
+
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
         {
-            for (int i = 0; i < 9; i++)
+            if (board[i, j] == 0)
             {
-                for (int j = 0; j < 9; j++)
-                {
-                    Console.Write(board[i, j] == 0 ? "  " : $"{board[i, j]} ");
-                    if (j == 2 || j == 5) Console.Write("| ");
-                }
-
-                Console.WriteLine();
-
-                if (i == 2 || i == 5)
-                    Console.WriteLine("------+-------+------");
+                Console.Write("  ");
             }
-            Console.WriteLine();
+            else
+            {
+                // Use a different color for the user-entered numbers
+                Console.ForegroundColor = (userEntered[i, j]) ? ConsoleColor.Blue : ConsoleColor.White;
+                Console.Write($"{board[i, j]} ");
+            }
+
+            if (j == 2 || j == 5) Console.Write("| ");
         }
+
+        Console.WriteLine();
+
+        if (i == 2 || i == 5)
+            Console.WriteLine("------+-------+------");
+    }
+
+    Console.WriteLine();
+}
 
         // Remove numbers from Sudoku to adjust difficulty
         static void RemoveNumbers(int[,] board, int count)
