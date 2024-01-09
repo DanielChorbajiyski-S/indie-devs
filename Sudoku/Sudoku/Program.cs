@@ -75,7 +75,7 @@
         // Main logic for playing Sudoku
         static void PlaySudoku(int[,] board, bool[,] userEntered)
         {
-  Console.WriteLine("Wtite a type of dificulty you want(Easy, Meduim or Hard).");
+  Console.WriteLine("Wtite a type of dificulty you want(Easy, Medium or Hard).");
   String commnad = Console.ReadLine();
   
  switch (commnad) {
