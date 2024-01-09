@@ -207,7 +207,9 @@
         static void PrintBoard(int[,] board, bool[,] userEntered)
 {
     Console.Clear();
-
+            
+    ConsoleColor def = ConsoleColor.White;
+            
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -222,7 +224,9 @@
                 Console.ForegroundColor = (userEntered[i, j]) ? ConsoleColor.Blue : ConsoleColor.White;
                 Console.Write($"{board[i, j]} ");
             }
-
+            
+            Console.ForegroundColor=def;
+            
             if (j == 2 || j == 5) Console.Write("| ");
         }
 
